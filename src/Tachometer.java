@@ -108,7 +108,7 @@ public void auto(){
 				}	
 		}
 
-		else if (id == 2 && lp1 > 30 && lp1 <= 60) {
+		else if (id == 2 && lp1 >= 30 && lp1 <= 60) {
 		
 			if (lp1-30 > pcurrent)
 
@@ -135,7 +135,7 @@ public void auto(){
 				}
 		} 
 				
-		 else if (id == 3 && lp1 > 60)
+		 else if (id == 3 && lp1 >= 60)
 
 		{
 			if (lp1-60 > pcurrent)

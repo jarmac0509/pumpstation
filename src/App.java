@@ -38,7 +38,7 @@ class Combo extends JFrame {
 		add(obpanel);	
 		add(psr);
 		add(wsk);
-		scheme.setBounds(180, 40, 300, 112);
+		scheme.setBounds(180, 40, 350, 112);
 		obpanel.setBounds(150, 160, 400, 120);
 		ps.setBounds(10, 308, 180, 100);
 		psr.setBounds(195, 310, 350, 250);
