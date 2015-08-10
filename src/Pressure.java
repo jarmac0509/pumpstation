@@ -3,9 +3,21 @@ import java.util.Random;
 public class Pressure {
 	int pcurrent;
 	int ptasked;
+	boolean fin;
+	Runnable rws;
+	Thread t;
 
 		Pressure(){
-			Runnable rws = new RunPointer();
+			rws = new RunPointer();
+			
+		}
+		public void reset(){			
+			fin=true;
+			pcurrent=0;
+			ptasked=0;
+		}
+		public void start(){
+			fin=false;
 			Thread t = new Thread(rws);
 			t.start();
 		}
@@ -41,7 +53,7 @@ RunPointer() {
 };
 
 public void run() {
-	while (true) {
+	while (fin!=true) {
 		
 		update();
 //		WskaznikCisnienia.this.repaint();

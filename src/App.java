@@ -20,7 +20,7 @@ public class App {
 
 class Combo extends JFrame {
 	private static final int DEFAULT_WIDTH = 600;
-	private static final int DEFAULT_HEIGHT = 430;
+	private static final int DEFAULT_HEIGHT = 480;
 	public Combo() {
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 //		setLayout(new BorderLayout(30,0));

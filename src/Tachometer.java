@@ -12,18 +12,30 @@ public class Tachometer extends JPanel {
 	int ptasked;
 	Pressure pa;
 	int id,lp1;
-
+	boolean fin;
+	Runnable rob;
+	Thread w1;
 	Tachometer(Pressure c, int i) {
 		id = i;
 		pa = c;
-	
+		rob = new RunTachometer(this);
+		w1 = new Thread(rob);
 	}
 public void auto(){
-	Runnable rob = new RunTachometer(this);
-	Thread w1 = new Thread(rob);
+	fin=false;
+	w1 = new Thread(rob);
 	w1.start();
 
 }
+public void stop(){
+	pcurrent=0;
+	ptasked=0;
+	lp1=0;
+	fin=true;
+	repaint();
+
+	
+};
 	public void paintComponent(Graphics g1) {
 		super.paintComponent(g1); // erase background
 		Graphics2D g = (Graphics2D) g1;
@@ -80,8 +92,8 @@ public void auto(){
 		return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
-	public void update() {
-		lp1=pa.getpcurrent();
+	public void update() {//if(fin!=true){
+		lp1=pa.getpcurrent();//}
 		if (id == 1 && lp1<= 30) {
 			if (pcurrent < lp1)
 				for (;  lp1>pcurrent ;) {
@@ -163,10 +175,10 @@ public void auto(){
 				}
 		}
 		}
-	}
+	
 
 
-class RunTachometer implements Runnable {
+private class RunTachometer implements Runnable {
 	Tachometer obr;
 
 	RunTachometer(Tachometer o) {
@@ -174,11 +186,12 @@ class RunTachometer implements Runnable {
 	}
 
 	public void run() {
-		while (true) {
+		while (fin!=true) {
 			// System.out.println("teraz aktualizuje");
 			obr.update();
 			// System.out.println("teraz repainuje");
 			// obr.repaint();
 		}
 	}
+}
 }
