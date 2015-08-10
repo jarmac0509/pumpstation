@@ -11,6 +11,7 @@ public class ControlPanel extends JPanel{
 	private static final int DEFAULT_WIDTH = 100;
 	private static final int DEFAULT_HEIGHT = 100;
 	Pressure c;
+	Power pow;
 	int ptasked=0;
 	boolean flag=false;
 	boolean flag3=false;
@@ -20,9 +21,10 @@ public class ControlPanel extends JPanel{
 	public int gettasked(){
 		return ptasked;
 	}
-	ControlPanel(TachometerPanel po,Pressure p){
+	ControlPanel(TachometerPanel po,Pressure p,Power x){
 		pobr=po;
 		c=p;
+		pow=x;
 	setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	double[][] size=new double[2][2];
 	for(int i=0;i<2;i++)
@@ -44,7 +46,7 @@ b1.addActionListener(new ActionListener() {
 		pobr.ob1.auto();
 		pobr.ob2.auto();
 		pobr.ob3.auto();
-		c.start();
+		pow.start();
 		}
 		else
 		{b1.setBackground(null);
@@ -64,6 +66,7 @@ b2.addActionListener(new ActionListener() {
 		//String ans=JOptionPane.showInputDialog(null,"tytul","podaj wartosc zadana");
 		//int pzadane=Integer.parseInt(ans);
 		ptasked=c.ptasked();
+		pow.settasked(ptasked);
 		System.out.println("ptasked=" + ptasked);
 	}
 });

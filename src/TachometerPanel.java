@@ -10,14 +10,16 @@ public class TachometerPanel extends JPanel{
 	Tachometer ob3;
 	public int ptasked;
 	Pressure p;
+	Power pow;
 	int getp(){return ptasked*5;}
-	TachometerPanel(Pressure c){	
+	TachometerPanel(Pressure c,Power a){	
 		p=c;
+		pow=a;
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setLayout(new FlowLayout(FlowLayout.LEFT,30,30));
-ob1=new Tachometer(p,1);
-ob2=new Tachometer(p,2);
-ob3=new Tachometer(p,3);
+ob1=new Tachometer(p,pow,1);
+ob2=new Tachometer(p,pow,2);
+ob3=new Tachometer(p,pow,3);
 add(ob1);
 add(ob2);
 add(ob3);

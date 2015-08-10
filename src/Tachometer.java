@@ -11,13 +11,15 @@ public class Tachometer extends JPanel {
 	int pcurrent;
 	int ptasked;
 	Pressure pa;
+	Power pow;
 	int id,lp1;
 	boolean fin;
 	Runnable rob;
 	Thread w1;
-	Tachometer(Pressure c, int i) {
+	Tachometer(Pressure c,Power a, int i) {
 		id = i;
 		pa = c;
+		pow=a;
 		rob = new RunTachometer(this);
 		w1 = new Thread(rob);
 	}
@@ -93,7 +95,7 @@ public void stop(){
 	}
 
 	public void update() {//if(fin!=true){
-		lp1=pa.getpcurrent();//}
+		lp1=pow.getpowcurrent();//}
 		if (id == 1 && lp1<= 30) {
 			if (pcurrent < lp1)
 				for (;  lp1>pcurrent ;) {

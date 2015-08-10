@@ -28,8 +28,9 @@ class Combo extends JFrame {
 		
 		
 		Pressure p=new Pressure();
-		TachometerPanel obpanel=new TachometerPanel(p);
-		ControlPanel ps=new ControlPanel(obpanel,p);
+		Power pow=new Power(p);
+		TachometerPanel obpanel=new TachometerPanel(p,pow);
+		ControlPanel ps=new ControlPanel(obpanel,p,pow);
 		PressureIndicator wsk=new PressureIndicator(p);
 		ManualControlPanel psr=new ManualControlPanel();
 		Scheme scheme=new Scheme();

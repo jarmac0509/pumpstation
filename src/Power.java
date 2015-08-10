@@ -1,20 +1,20 @@
-import java.util.Random;
-
-public class Pressure {
-	int pcurrent;
-	int ptasked;
+public class Power {
+	int powcurrent;
+	int powtasked;
 	boolean fin;
+	Pressure p;
 	Runnable rws;
 	Thread t;
 
-		Pressure(){
+		Power(Pressure x){
 			rws = new RunPointer();
+			p=x;
 			
 		}
 		public void reset(){			
 			fin=true;
-			pcurrent=0;
-			ptasked=0;
+			powcurrent=0;
+			powtasked=0;
 		}
 		public void start(){
 			fin=false;
@@ -22,10 +22,10 @@ public class Pressure {
 			t.start();
 		}
 		public void update() {
-		if (ptasked >pcurrent)
-			for (; pcurrent < ptasked;) {
-				pcurrent++;
-				System.out.println("pc "+pcurrent);
+		if (powtasked >powcurrent)
+			for (; powcurrent < powtasked;) {
+				powcurrent++;
+				System.out.println("pow "+powcurrent);
 				try {
 					Thread.sleep(150);
 				}
@@ -33,21 +33,20 @@ public class Pressure {
 				catch (InterruptedException e) {
 				}
 			}
-		else if (ptasked <pcurrent)
-			for (; pcurrent > ptasked;) {
-				pcurrent--;
-				System.out.println("pc "+pcurrent);
+		else if (powtasked <powcurrent)
+			for (; powcurrent > powtasked;) {
+				powcurrent--;
+				System.out.println("pow "+powcurrent);
 				try {
 					Thread.sleep(150);
 				} catch (InterruptedException e) {
 				}
 			}
 }
-		public int getpcurrent(){return pcurrent;}
-		public int gettasked(){return ptasked;}
-		public int ptasked(){
-			ptasked = new Random().nextInt(90);
-			return ptasked;
+		public int getpowcurrent(){return powcurrent;}
+
+		public void settasked(int a){
+			powtasked=a;
 		}
 private class RunPointer implements Runnable {
 RunPointer() {
