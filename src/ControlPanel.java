@@ -18,13 +18,17 @@ public class ControlPanel extends JPanel{
 	boolean flag4=false;
 	TachometerPanel pobr;
 	JButton b1,b2,b3,b4;
+	Auto auto;
+	Manual man;
 	public int gettasked(){
 		return ptasked;
 	}
-	ControlPanel(TachometerPanel po,Pressure p,Power x){
+	ControlPanel(TachometerPanel po,Pressure p,Power x,Auto a,Manual m){
 		pobr=po;
 		c=p;
 		pow=x;
+		auto=a;
+		man=m;
 	setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	double[][] size=new double[2][2];
 	for(int i=0;i<2;i++)
@@ -32,8 +36,8 @@ public class ControlPanel extends JPanel{
 	size[i][j]=TableLayout.PREFERRED;
 TableLayout lay=new TableLayout(size);
 setLayout(lay);
-lay.insertColumn(1, 20);
-lay.insertRow(1, 20);
+lay.insertColumn(1, 10);
+lay.insertRow(1, 6);
 b1=new JButton("auto");
 
 b1.addActionListener(new ActionListener() {
@@ -46,10 +50,19 @@ b1.addActionListener(new ActionListener() {
 		pobr.ob1.auto();
 		pobr.ob2.auto();
 		pobr.ob3.auto();
+		a.start();
+		
+		//a.pu1.auto();
+		//a.pu2.auto();
+		//a.pu3.auto();
+		
+		
 		pow.start();
+	
 		}
 		else
 		{b1.setBackground(null);
+		a.stop();
 
 		//pobr.ob1.stop();
 		//pobr.ob2.stop();
@@ -67,7 +80,9 @@ b2.addActionListener(new ActionListener() {
 		//int pzadane=Integer.parseInt(ans);
 		ptasked=c.ptasked();
 		pow.settasked(ptasked);
-		System.out.println("ptasked=" + ptasked);
+		//a.start();
+		//a.adjust();
+		System.out.println("ControlPabel ptasked=" + ptasked);
 	}
 });
 b3=new JButton("manual");
@@ -78,6 +93,17 @@ b3.addActionListener(new ActionListener() {
 		{b3.setBackground(Color.RED);
 		b4.setBackground(null);
 		b1.setBackground(null);
+		//man.start();
+		//pow.start();
+		pobr.ob1.manual();
+		pobr.ob2.manual();
+		pobr.ob3.manual();
+		//a.pu1.auto();
+		//a.pu2.auto();
+		//a.pu3.auto();
+		
+		
+		
 		//pobr.ob1.stop();
 		//pobr.ob2.stop();
 		//pobr.ob3.stop();
@@ -101,6 +127,7 @@ b4.addActionListener(new ActionListener() {
 		pobr.ob1.stop();
 		pobr.ob2.stop();
 		pobr.ob3.stop();
+		pow.reset();
 		c.reset();
 		}
 		else{

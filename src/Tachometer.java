@@ -12,32 +12,40 @@ public class Tachometer extends JPanel {
 	int ptasked;
 	Pressure pa;
 	Power pow;
-	int id,lp1;
-	boolean fin;
-	Runnable rob;
-	Thread w1;
-	Tachometer(Pressure c,Power a, int i) {
+	Pump pu;
+	int id,lp1,n=0;
+	boolean fin,fin2,f1,f2,f3;
+	Runnable rob,rman;
+	Thread w1,w2;
+	Tachometer(Pressure c,Power a, int i,Pump p) {
 		id = i;
 		pa = c;
 		pow=a;
-		rob = new RunTachometer(this);
+		pu=p;
+		rob = new AutoTachometer(this);
+		rman = new ManTachometer(this);
 		w1 = new Thread(rob);
 	}
 public void auto(){
 	fin=false;
 	w1 = new Thread(rob);
 	w1.start();
-
 }
 public void stop(){
 	pcurrent=0;
 	ptasked=0;
 	lp1=0;
 	fin=true;
-	repaint();
-
-	
+	repaint();	
 };
+public void manual(){
+	fin=true;
+	fin2=false;	
+	f3=true;
+	w2 = new Thread(rman);
+	w2.start();
+}
+
 	public void paintComponent(Graphics g1) {
 		super.paintComponent(g1); // erase background
 		Graphics2D g = (Graphics2D) g1;
@@ -100,10 +108,10 @@ public void stop(){
 			if (pcurrent < lp1)
 				for (;  lp1>pcurrent ;) {
 					pcurrent++;
-					System.out.println("p1 " + pcurrent);
+					System.out.println("Tachometer a update t1 local powcurrent " + pcurrent);
 					this.repaint();
 					try {
-						Thread.sleep(100);
+						Thread.sleep(50);
 					}
 
 					catch (InterruptedException e) {
@@ -114,9 +122,9 @@ public void stop(){
 				for (;lp1<pcurrent;) {
 					pcurrent--;
 					this.repaint();
-					System.out.println("p1 " + pcurrent);
+					System.out.println("Tachometer a update t1 local powcurrent " + pcurrent);
 					try {
-						Thread.sleep(100);
+						Thread.sleep(50);
 					} catch (InterruptedException e) {
 					}
 				}	
@@ -129,9 +137,9 @@ public void stop(){
 				for (; pcurrent< lp1-30;) {
 					pcurrent++;
 					this.repaint();
-					System.out.println("p2 " + pcurrent);
+					System.out.println("Tachometer a update t2 local powcurrent " + pcurrent);
 					try {
-						Thread.sleep(100);
+						Thread.sleep(50);
 					}
 
 					catch (InterruptedException e) {
@@ -141,7 +149,7 @@ public void stop(){
 				for (;pcurrent>lp1-30 ;) {
 					--pcurrent;
 					this.repaint();
-					System.out.println("p2 " + pcurrent);
+					System.out.println("Tachometer a update t2 local powcurrent " + pcurrent);
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
@@ -156,7 +164,7 @@ public void stop(){
 				for (;pcurrent< lp1-60;) {
 					++pcurrent;
 					this.repaint();
-					System.out.println(pcurrent);
+					System.out.println("Tachometer a update  t3 local powcurrent "+pcurrent);
 					try {
 						Thread.sleep(100);
 					}
@@ -169,7 +177,7 @@ public void stop(){
 				for (;pcurrent> lp1-60;) {
 					pcurrent--;
 					this.repaint();
-					System.out.println(pcurrent);
+					System.out.println("Tachometer a update  t3 local powcurrent "+pcurrent);
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
@@ -177,13 +185,67 @@ public void stop(){
 				}
 		}
 		}
-	
+	public void network(){
+		f1=!f1;
+		//f2=true;
+	}
+	public void manupdateon(boolean b) {
+		//if(lp1>0){
+			
+			if(b&&f3){
+				pu.col=Color.RED;
+			pu.repaint();
+				for (;  30>pcurrent ;) {
+					pcurrent++;
+					this.repaint();
+					System.out.println("Tachometer network t local powcurrent " + pcurrent);
+					
+					try {
+						Thread.sleep(150);
+					}
 
-
-private class RunTachometer implements Runnable {
+					catch (InterruptedException e) {
+					}
+				}
+	}}
+	public void manupdateoff(boolean b){
+		if(!b&&f3)
+				for (;0<pcurrent;) {
+					pcurrent--;
+					this.repaint();
+					System.out.println("Tachometer network t local powcurrent " + pcurrent);
+					try {
+						Thread.sleep(150);
+					} catch (InterruptedException e) {
+					}
+					
+				}	
+		if(pcurrent==0)
+		pu.col=Color.BLUE;
+		pu.repaint();
+		}
+	public void setconverter(){
+		f3=false;
+	}
+	public void up(){
+		pu.col=Color.RED;
+		pu.repaint();
+	if(pcurrent<30)
+		pcurrent++;
+		this.repaint();					
+		}
+	public void down(){
+	if(pcurrent>0)
+		pcurrent--;
+	if(pcurrent==0)
+		pu.col=Color.BLUE;
+		pu.repaint();
+		this.repaint();					
+}
+private class AutoTachometer implements Runnable {
 	Tachometer obr;
 
-	RunTachometer(Tachometer o) {
+	AutoTachometer(Tachometer o) {
 		obr = o;
 	}
 
@@ -191,6 +253,25 @@ private class RunTachometer implements Runnable {
 		while (fin!=true) {
 			// System.out.println("teraz aktualizuje");
 			obr.update();
+			//obr.manupdateon();
+			// System.out.println("teraz repainuje");
+			// obr.repaint();
+		}
+	}
+}
+private class ManTachometer implements Runnable {
+	Tachometer obr;
+
+	ManTachometer(Tachometer o) {
+		obr = o;
+	}
+
+	public void run() {
+		while (fin2!=true) {
+			// System.out.println("teraz aktualizuje");
+			//obr.update();
+			obr.manupdateon(f1);
+			 obr.manupdateoff(f1);
 			// System.out.println("teraz repainuje");
 			// obr.repaint();
 		}
