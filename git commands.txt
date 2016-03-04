@@ -1,8 +1,11 @@
 git config --global user.name""/user.email""
 git clone http...
-git add .
-git commit -m ""
+git add . dodaje pliki do przechowalni przyjmuje pliki jako parametry . dodaje caly katalog biezacy
+git commit -m "" wykonuje commita opcja -a powoduje dodanie wszystkich sledzonych plikow(poprzez add)
 git push
 git status
 git log
 git pull origin master
+git init -zaklada nowe repozytorium
+git checkout -przywraca komita podanego jako numer w argumencie
+gitk -podglad graficzny
