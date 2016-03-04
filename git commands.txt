@@ -5,7 +5,7 @@ git commit -m "" wykonuje commita opcja -a powoduje dodanie wszystkich sledzonyc
 git push
 git status
 git log
-git pull origin master
+git pull origin master- sciaga repozytorium na komputer
 git init -zaklada nowe repozytorium
 git checkout -przywraca komita podanego jako numer w argumencie
 gitk -podglad graficzny
