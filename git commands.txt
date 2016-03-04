@@ -9,3 +9,4 @@ git pull origin master- sciaga repozytorium na komputer
 git init -zaklada nowe repozytorium
 git checkout -przywraca komita podanego jako numer w argumencie
 gitk -podglad graficzny
+git branch
