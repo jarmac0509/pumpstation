@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
-import layout.TableLayout;
+import java.awt.layout.TableLayout;
 
 
 public class ControlPanel extends JPanel{
