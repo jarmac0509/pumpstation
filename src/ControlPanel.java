@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
-import java.awt.layout.TableLayout;
+//import layout.TableLayout;
 
 
 public class ControlPanel extends JPanel{
@@ -35,11 +35,11 @@ public class ControlPanel extends JPanel{
 	double[][] size=new double[2][2];
 	for(int i=0;i<2;i++)
 		for(int j=0;j<2;j++)
-	size[i][j]=TableLayout.PREFERRED;
-TableLayout lay=new TableLayout(size);
-setLayout(lay);
-lay.insertColumn(1, 10);
-lay.insertRow(1, 6);
+//	size[i][j]=TableLayout.PREFERRED;
+//TableLayout lay=new TableLayout(size);
+//setLayout(lay);
+//lay.insertColumn(1, 10);
+//lay.insertRow(1, 6);
 b1=new JButton("auto");
 
 b1.addActionListener(new ActionListener() {
